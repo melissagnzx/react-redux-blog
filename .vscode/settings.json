@@ -1,0 +1,6 @@
+{
+  "editor.fontFamily": "VictorMono-Medium", //i.e. add "Medium"
+  "editor.fontLigatures": true,
+  "editor.fontWeight": "900" //To make it even bolder (Though optional)
+  // ,Menlo, Monaco, 'Courier New', monospace,FiraCode-Retina, FiraCode-Bold
+}
