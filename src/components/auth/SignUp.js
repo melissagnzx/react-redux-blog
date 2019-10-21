@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { signUp } from "../../store/actions/AuthActions";
 
 class SignUp extends Component {
   state = {
@@ -9,6 +10,7 @@ class SignUp extends Component {
     firstName: "",
     lastName: ""
   };
+
   /* Updates the element in state according to its input field ID */
   handleChange = e => {
     this.setState({ [e.target.id]: e.target.value });
@@ -16,7 +18,7 @@ class SignUp extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log(this.state);
+    this.props.signUp(this.state);
   };
   render() {
     //If logged in redirect to main page
@@ -43,17 +45,26 @@ class SignUp extends Component {
             <input type="text" id="lastName" onChange={this.handleChange} />
           </div>
           <div className="input-field">
-            <button className="btn pink lighten-1 z-depth-0">Login</button>
+            <button className="btn pink lighten-1 z-depth-0">Sign Up</button>
           </div>
         </form>
       </div>
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    signUp: newUser => dispatch(signUp(newUser))
+  };
+};
 const mapStateToProps = state => {
   return {
     auth: state.firebase.auth
   };
 };
 
-export default connect(mapStateToProps)(SignUp);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignUp);

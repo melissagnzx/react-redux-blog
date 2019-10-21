@@ -14,7 +14,7 @@ export const signIn = credentials => {
   };
 };
 
-//Sign Out Function
+//Sign Out Action
 export const signOut = () => {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
@@ -23,6 +23,33 @@ export const signOut = () => {
       .signOut()
       .then(() => {
         dispatch({ type: "SIGNOUT_SUCCESS" });
+      });
+  };
+};
+
+//Sign Up Action
+export const signUp = newUser => {
+  return (dispatch, getState, { getFirebase, getFirestore }) => {
+    const firebase = getFirebase();
+    const firestore = getFirestore();
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(newUser.email, newUser.password)
+      .then(res => {
+        return firestore
+          .collection("users")
+          .doc(res.user.uid)
+          .set({
+            firstName: newUser.firstName,
+            lastName: newUser.lastName,
+            initials: newUser.firstName[0] + newUser.lastName[0]
+          });
+      })
+      .then(() => {
+        dispatch({ type: "SIGNUP_SUCESS" });
+      })
+      .catch(err => {
+        dispatch({ type: "SIGNUP_ERROR", err });
       });
   };
 };

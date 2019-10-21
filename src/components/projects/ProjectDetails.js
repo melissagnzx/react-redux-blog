@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import { Redirect } from "react-router-dom";
+import moment from "moment";
 /*React router attaches props inside component which contain details about router such as: 
  - History
  - Location
@@ -24,7 +25,7 @@ function ProjectDetails(props) {
             <div>
               Posted by {project.authorFirstName} {project.authorLastName}
             </div>
-            <div>date</div>
+            <div>{moment(project.createdAt.toDate()).calendar()}</div>
           </div>
         </div>
       </div>
